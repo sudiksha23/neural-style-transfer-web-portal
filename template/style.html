@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block style %}
 
-.container {
+.col-3 {
   position: relative;
  
 }
@@ -19,17 +19,17 @@
   opacity: 0;
   position: absolute;
   top: 50%;
-  left: 12%;
+  left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
 }
 
-.container:hover .image {
+.col-3:hover .image {
   opacity: 0.3;
 }
 
-.container:hover .middle {
+.col-3:hover .middle {
   opacity: 1;
 }
 
@@ -45,19 +45,20 @@ body{
 }    
 {% endblock style %}
 {% block body %}
+<h1 style="text-align: center; color: white;">DEFAULT STYLE MODELS</h1>
 <div class="slideshow-container">
- 
+ <div class="row">
                     {% for i in display %}
 
-                    <div class="container">
-                      <img src="{{ i.style.url }}" alt="Avatar" class="image" style="width:20%; margin: 10px;">
+                    <div class="col-3">
+                      <img src="{{ i.style.url }}" alt="Avatar" class="image" style="width:100%; margin: 10px; height: 300px;">
                       <div class="middle">
-                        <button class="text" ><a href="{% url 'styledisplay' i.style %}">Add</a></button>
+                        <button class="text" ><a href="{% url 'styledisplay' i.style %}"  style="text-decoration: none; padding-left: 50px;padding-right: 50px; font-weight: normal; color: white;">Add</a></button>
                       </div>
                     </div>
                    
                     {% endfor %}
-                 
+                 </div>
                 </div>
 
                  

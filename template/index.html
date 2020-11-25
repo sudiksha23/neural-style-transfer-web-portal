@@ -2,8 +2,7 @@
 
 {% block style %}
 .container{
-    {% load static %}
-
+    
     margin-right:0px;
     margin-top:0px;
     width: 22%;
@@ -98,6 +97,9 @@ img {
     padding-bottom:10px;
     margin-left:45px;
 }
+.uploadbuttons:hover{
+    background-color:rgb(122, 27, 18);
+}
 li{
     margin-right:25px;
     margin-left:25px;
@@ -161,8 +163,9 @@ li{
 <div class="container">
 
     <br><br>
-    <h1 style="text-align:center;text-shadow: 2px 2px rgb(123,35,28);">NEURAL STYLE TRANSFER</h1><br>
-    <a class="uploadbuttons" href="      " style=" padding-left: 50px;padding-right: 50px;text-decoration: none;">Merge</a>
+    <h1 style="text-align:center;text-shadow: 2px 2px rgb(123,35,28);">NEURAL STYLE TRANSFER</h1>
+    <br><br><br>
+    <a class="uploadbuttons" href="/merge" style=" padding-left: 50px;padding-right: 50px;text-decoration: none; font-weight: normal; color: white;">Merge</a>
     <br><br>
     <h5 style=" text-align:center;text-shadow: 2px 2px rgb(123,35,28); color: #262626; font-weight: bold;">&#x2E3B;UPLOADS&#x2E3B;</h5>
     <br>
@@ -201,11 +204,9 @@ li{
 
 
     
-    <a class="uploadbuttons" href="{% url 'contentdisplay' 'content/uploads/selfie.jpg' %}" style="text-decoration: none; padding-left: 50px;padding-right: 50px;">Selfie</a>
+    <a class="uploadbuttons" href="{% url 'contentdisplay' 'content/uploads/selfie.jpg' '0' %}" style="text-decoration: none; padding-left: 50px;padding-right: 50px; font-weight: normal; color: white;">Selfie</a>
     <br><br>
-    <span class="uploadbuttons" onclick="openNavContent()" style=" padding-left: 30px;padding-right: 30px;">Content</span>
-    <br><br>
-    <span class="uploadbuttons" onclick="openNavStyle()" style="padding-left: 52px; padding-right: 52px;">Style</span>
+    <span class="uploadbuttons" onclick="openNavContent()" style=" padding-left: 37px;padding-right: 37px;">Picture</span>
 
     <div id="myNavContact" class="overlay">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNavContact()">&times;</a>
@@ -256,9 +257,9 @@ li{
 </div>
 <!-- https://i.postimg.cc/jSGVvkzb/Q1FKoT.jpg -->
 {% load static %}
-<img src="{{ userprofile.content.url }}" onerror="if (this.src != '') this.src = 'https://i.postimg.cc/Tw8m4K90/images.jpg';"  class="box" style="top: -10px; left: -80px; z-index: -1;">
-<img src="https://i.postimg.cc/5yDMBM1X/wave-output.png" style="margin-top: 120px; margin-left: 340px; height: 450px; width: 450px;"  class="box">
-<img src="{{ userprofile.style.url }}"  onerror="if (this.src != '') this.src = 'https://i.postimg.cc/PfCJwXQr/wave-crop.jpg';" style="margin-top: 200px; margin-left: 650px; height: 600px; width: 600px; z-index: -1;" class="box">
+<img src="{{ userprofile.content.url }}" onerror="if (this.src != '') this.src = 'https://i.postimg.cc/HsLxcfzb/content-1.jpg';"  class="box" style="top: -10px; left: -80px; z-index: -1;">
+<img src="../static/media/output/_.jpg" style="margin-top: 120px; margin-left: 340px; height: 450px; width: 450px;"  class="box">
+<img src="{{ userprofile.style.url }}"  onerror="if (this.src != '') this.src = 'https://i.postimg.cc/nzkmZqVx/style-2.png';" style="margin-top: 200px; margin-left: 650px; height: 600px; width: 600px; z-index: -1;" class="box">
 
 <div class="footer">
 <p style="float: left; margin-left: 40px; padding-top: 5px; font-size: large;  font-family: 'Orbitron', sans-serif; ">

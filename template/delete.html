@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block style %}
+body{
+  background-image: none;
+  background-color: black;
+}    
+.container{
+    background-color:white;
+    width:400px;
+    padding:20px;
+    margin-top:200px;
+}
+{% endblock style %}
+
+{% block body %}
+
+
+
+
+{% block content%}
+
+<div class="container">
+    <p>Are you sure you want to delete {{user}}?</p>
+<form action="{% url 'delete' user.content %}" method="POST">
+{% csrf_token %}
+    <a class="uploadbuttons" href="{% url 'index'%}" style="text-decoration: none;padding:10px;color: white; background-color:black;">Cancel</a>
+    <input type="submit" name="confirm">
+</form>
+</div>
+
+{% endblock %}
+
+{% endblock body %}

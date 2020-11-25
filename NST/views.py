@@ -10,8 +10,17 @@ import cv2
 from django.core.files import File
 from django.contrib.auth.forms import UserCreationForm                                                               
 from django.core.files.images import ImageFile
-urls1=0
-urls2=0
+urls1=""
+urls2=""
+
+def delete(request, pk2):
+    user=Content.objects.get(content=pk2)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('/')
+    context = {'user': user}
+    return render(request, 'delete.html', context)
+
 def index(request):
     return render(request, 'index.html')
 def changepath(request):
@@ -22,10 +31,10 @@ def redirect_view(request):
     return response
 
 def content(request):
-   
     data=Content.objects.all()
     context = {'display':data}
     return render(request, 'content.html', context)
+
 def style(request):
     data=Style.objects.all()
     context = {'display':data}
@@ -43,70 +52,66 @@ def contentfunc(request):
         form = ContentForm() 
     return render(request, 'NST/index.html',{'form':form}) 
 
-def stylefunc(request):
-    if request.method == 'POST' or request.FILES == 'file':
-        form = StyleForm(request.POST, request.FILES) 
-        
-        if form.is_valid(): 
-            form.save() 
-            return redirect('/')
-            
-    else: 
-        form = StyleForm() 
-    return render(request, 'NST/index.html',{'form':form}) 
 #<MultiValueDict: {'style': [<InMemoryUploadedFile: water_lilies_crop.jpg (image/jpeg)>]}>
-def contentdisplay(request, pk_test):
+
+from pathlib import Path
+def contentdisplay(request, pk_test,count):
+    print(pk_test)
     if(pk_test!='content/uploads/selfie.jpg'):
         user=Content.objects.get(content=pk_test)
-        url1=pk_test
+        path=Path(__file__).parent / "../static/media/"
+        img_path="../static/media/"+pk_test
+        with open(str(path)+"/content-file.txt",'w') as f:
+            print("file opened")
+            f.write(img_path)
         return render(request, 'index.html', {'userprofile' : user})
     else:
+        print("in captires")
         cam = cv2.VideoCapture(0)
-        count=0
-        result=True
-        while(result):
-            ret, img = cam.read()
-            selfiefile='C:/Users/SUDIKSHA AGRAWAL/my_projects/NstWebPortal/static/media/content/uploads/selfie'+str(count)+'.jpg'
-            cv2.imwrite(selfiefile, img)
-            print(selfiefile)
-            count +=1
-            result=False
+        
+        ret, img = cam.read()
+        #path=Path(__file__).parent
+        path=Path(__file__).parent / "../static/media/"
+        selfiefile='C:/Users/SUDIKSHA AGRAWAL/NstWebPortal/static/media/content/uploads/selfie'+str(count)+'.jpg'
+        img_path = "../static/media/content/uploads/selfie" + str(count)+".jpg"
+        
+    
+        cv2.imwrite(selfiefile, img)
+        with open(str(path)+"/content-file.txt",'w') as f:
+            print("file opened")
+            f.write(img_path)
+        print(selfiefile)
+        print(img_path)
         cam.release
         cv2.destroyAllWindows
-        url1=selfiefile[64:91]
-        print(url1)
+        url1=selfiefile[52:80]
+        print("URLs: "+url1)
         
-        m = Content()                                                                
+        m = Content()        
         m.content = url1   
         m.save()
 
         user=Content.objects.filter(content= url1)
         #c=c+1
         return render(request, 'index.html',{'userprofile': user[0]})
+    
+        
     return render(request,'index.html')    
     
 
 def styledisplay(request, pk_test):
     user=Style.objects.get(style=pk_test)
-    url2=pk_test
-    print(url2)
+    path=Path(__file__).parent / "../static/media/"    
+    with open(str(path)+"/style-file.txt",'w') as f:
+        f.write("models/"+pk_test[14:-3]+"model")
+    # url2=pk_test
     return render(request, 'index.html', {'userprofile' : user})
 
-def capturefunc(request):
-    cam = cv2.VideoCapture(0)
-    count = 0
-    result=True
-    while(result):
-        ret, img = cam.read()
-        selfiefile='C:/Users/SUDIKSHA AGRAWAL/my_projects/NstWebPortal/static/media/content/uploads/selfie.jpg'
-        cv2.imwrite(selfiefile, img)
-        print(selfiefile)
-        count +=1
-        result=False
-        
-    cam.release
-    cv2.destroyAllWindows
-    return render(request, 'index.html')
+import os
+def merge(request):
+    print("Merging...")
+    path=Path(__file__).parent / "generate.py"
+    print(str(path).replace(" ","/ "))
+    os.system("python \""+str(path)+"\"")
+    return render(request,'index.html')
 
-print(urls1)
-print(urls2)

@@ -12,13 +12,14 @@ urlpatterns = [
     path('admin', admin.site.urls),
     path("", views.index, name='home'),
     path("index",views.index, name='index'),
-    path("stylefunc", views.stylefunc, name="stylefunc"),
     path("contentfunc", views.contentfunc, name="contentfunc"),
-    path("capturefunc", views.capturefunc, name="capturefunc"),
-    path("contentdisplay/<path:pk_test>",views.contentdisplay, name="contentdisplay"),
+    path("merge", views.merge, name="merge"),
+    path("contentdisplay/<path:pk_test>/<int:count>",views.contentdisplay, name="contentdisplay"),
     path("styledisplay/<path:pk_test>",views.styledisplay, name="styledisplay"),
     path("styledisplay/style/uploads/content/<path:pk_test>",views.changepath),
     path("content",views.content,name="content"),
     path("style",views.style,name="style"),
     path('/redirect/', redirect_view),
+    path("delete/<path:pk2>",views.delete, name="delete"),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
